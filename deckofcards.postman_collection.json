@@ -1,0 +1,135 @@
+{
+	"info": {
+		"_postman_id": "c7d5e558-a5b8-45e5-a8dd-fe449e47f3dd",
+		"name": "deckofcards",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Shuffle cards",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"getdeckid\", function () {\r",
+							"    let responseData = pm.response.json();\r",
+							"     console.log(responseData[\"deck_id\"]);\r",
+							"     pm.globals.set(\"deck_id\", responseData[\"deck_id\"]);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1",
+					"protocol": "http",
+					"host": [
+						"deckofcardsapi",
+						"com"
+					],
+					"path": [
+						"api",
+						"deck",
+						"new",
+						"shuffle",
+						""
+					],
+					"query": [
+						{
+							"key": "deck_count",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Draw card",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"verifydeckid\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.deck_id).to.eql(pm.globals.get(\"deck_id\"));\r",
+							"    console.log(jsonData.deck_id);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://deckofcardsapi.com/api/deck/{{deck_id}}/draw/?count=2",
+					"protocol": "http",
+					"host": [
+						"deckofcardsapi",
+						"com"
+					],
+					"path": [
+						"api",
+						"deck",
+						"{{deck_id}}",
+						"draw",
+						""
+					],
+					"query": [
+						{
+							"key": "count",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Reshuffle",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"verifydeckid\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.deck_id).to.eql(pm.globals.get(\"deck_id\"));\r",
+							"    console.log(jsonData.deck_id);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://deckofcardsapi.com/api/deck/{{deck_id}}/shuffle/",
+					"protocol": "http",
+					"host": [
+						"deckofcardsapi",
+						"com"
+					],
+					"path": [
+						"api",
+						"deck",
+						"{{deck_id}}",
+						"shuffle",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
